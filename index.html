@@ -4,133 +4,515 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hunter Web Development</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #F9FAFB;
-      color: #1E293B;
+    :root {
+      --primary: #26C6DA;
+      --primary-dark: #00ACC1;
+      --secondary: #0F172A;
+      --light: #F9FAFB;
+      --text: #1E293B;
+      --card-bg: #ffffff;
+      --shadow: 0 10px 20px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
     }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Header */
     header {
-      background-color: #0F172A;
+      background-color: var(--secondary);
       color: white;
-      padding: 20px 40px;
+      padding: 15px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    
     header h1 {
       margin: 0;
-      color: #26C6DA;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
     }
+    
+    header h1 img {
+      height: 60px;
+      vertical-align: middle;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
+    
+    header nav {
+      display: flex;
+      gap: 25px;
+    }
+    
     header nav a {
       color: white;
-      margin-left: 20px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      position: relative;
+      padding: 5px 0;
+      transition: var(--transition);
     }
+    
+    header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+    
+    header nav a:hover {
+      color: var(--primary);
+    }
+    
+    header nav a:hover::after {
+      width: 100%;
+    }
+    
+    /* Hero Section */
     .hero {
       text-align: center;
-      padding: 80px 20px;
-    }
-    .hero h2 {
-      font-size: 42px;
-      margin-bottom: 20px;
-      color: #0F172A;
-    }
-    .hero p {
-      font-size: 18px;
-      max-width: 700px;
-      margin: 0 auto 30px;
-    }
-    .btn {
-      background-color: #26C6DA;
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
       color: white;
-      padding: 15px 30px;
-      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2326C6DA" fill-opacity="0.1" d="M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,218.7C672,224,768,160,864,138.7C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.5;
+    }
+    
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .hero h2 {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 15px 35px;
+      border-radius: 50px;
       text-decoration: none;
       font-weight: bold;
-      transition: 0.3s;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(38, 198, 218, 0.3);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: var(--transition);
+      z-index: -1;
+    }
+    
     .btn:hover {
-      background-color: #00ACC1;
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(38, 198, 218, 0.4);
     }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    /* Sections générales */
     .section {
-      padding: 60px 20px;
+      padding: 80px 20px;
       text-align: center;
     }
+    
     .section h3 {
-      font-size: 28px;
+      font-size: 2.5rem;
       margin-bottom: 20px;
-      color: #0F172A;
+      color: var(--secondary);
+      position: relative;
+      display: inline-block;
     }
+    
+    .section h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background-color: var(--primary);
+      border-radius: 2px;
+    }
+    
+    /* Services */
     .services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
     }
+    
     .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
+    
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 0;
+      background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+      transition: var(--transition);
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .card:hover::before {
+      height: 100%;
+    }
+    
     .card h4 {
       margin-top: 0;
-      color: #26C6DA;
+      color: var(--primary);
+      font-size: 1.4rem;
+      margin-bottom: 15px;
     }
-    .card img {
-  display: block;
-  margin: 0 auto 16px auto;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(38,198,218,0.15);
-}
+    
+    .card i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: block;
+    }
+    
+    /* Tarifs */
+    #tarifs {
+      background-color: #f5f9ff;
+    }
+    
+    .pricing-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(38, 198, 218, 0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .pricing-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      border-color: var(--primary);
+    }
+    
+    .pricing-card h4 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    .price {
+      font-size: 2.2rem;
+      color: var(--secondary);
+      margin: 20px 0;
+      font-weight: 700;
+    }
+    
+    .price del {
+      font-size: 1.2rem;
+      color: #888;
+      margin-left: 10px;
+    }
+    
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin: 25px 0;
+    }
+    
+    .pricing-features li {
+      margin-bottom: 12px;
+      padding-left: 30px;
+      position: relative;
+    }
+    
+    .pricing-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .pricing-card img {
+      display: block;
+      margin: 0 auto 16px auto;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(38,198,218,0.15);
+    }
+    
+    /* FAQ */
     .faq {
       text-align: left;
       max-width: 800px;
-      margin: auto;
+      margin: 50px auto 0;
     }
+    
     .faq-item {
       margin-bottom: 20px;
+      border-radius: 12px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: var(--transition);
     }
-    .faq-item h4 {
-      color: #26C6DA;
-      margin-bottom: 5px;
+    
+    .faq-item:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
-    .chevron {
-      font-size: 18px;
-      margin-right: 8px;
-      color: #26C6DA;
-      transition: transform 0.3s;
+    
+    .faq-question {
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      background-color: #f8fdff;
+      transition: var(--transition);
     }
-    .faq-item.active .chevron {
+    
+    .faq-question:hover {
+      background-color: #e6f7ff;
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    
+    .faq-item.active .faq-answer {
+      padding: 20px;
+      max-height: 300px;
+    }
+    
+    .faq-item.active .faq-chevron {
       transform: rotate(180deg);
     }
+    
+    .faq-chevron {
+      transition: var(--transition);
+      color: var(--primary);
+    }
+    
+    /* Témoignages */
+    #temoignages {
+      background: linear-gradient(to bottom, #f5f9ff, #e6f7ff);
+    }
+    
+    .testimonials-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    
+    .testimonial-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      max-width: 350px;
+      transition: var(--transition);
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .testimonial-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .testimonial-card::before {
+      content: '"';
+      font-size: 5rem;
+      color: rgba(38, 198, 218, 0.1);
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      line-height: 1;
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .testimonial-author {
+      font-weight: 700;
+      color: var(--secondary);
+    }
+    
+    /* Contact */
+    #contact {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: white;
+    }
+    
+    #contact .section h3 {
+      color: white;
+    }
+    
+    #contact .section h3::after {
+      background-color: white;
+    }
+    
+    #passe {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      color: white;
+      opacity: 0.9;
+    }
+    
+    /* Footer */
     footer {
-      background-color: #0F172A;
+      background-color: var(--secondary);
       color: white;
       text-align: center;
-      padding: 30px 20px;
+      padding: 40px 20px;
     }
+    
     footer p {
       margin: 5px 0;
     }
+    
     footer a {
-      color: #26C6DA;
+      color: var(--primary);
       text-decoration: none;
+      transition: var(--transition);
     }
-    .answer {
-      display: none;
+    
+    footer a:hover {
+      text-decoration: underline;
     }
-    #passe {
-      font-size: 20px;
-      margin-bottom: 40px;
-      color: #0F172A;
-    }
+    
+    /* Menu mobile */
     .menu-toggle {
       display: none;
       flex-direction: column;
@@ -142,73 +524,408 @@
       cursor: pointer;
       margin-left: 10px;
     }
+    
     .menu-toggle span {
       display: block;
-      height: 4px;
+      height: 3px;
       width: 28px;
-      background: #26C6DA;
-      margin: 5px 0;
+      background: var(--primary);
+      margin: 3px 0;
       border-radius: 2px;
-      transition: 0.3s;
+      transition: var(--transition);
+    }
+    
+    /* === NOUVEAUX STYLES === */
+
+    /* Stats section */
+    #stats {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
     }
 
-    /* Mobile styles */
-    @media (max-width: 800px) {
+    #stats .section h3 {
+      color: white;
+    }
+
+    #stats .section h3::after {
+      background-color: white;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .stat-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Process section */
+    #process {
+      background-color: #f8fdff;
+    }
+
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      margin-top: 50px;
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 30px;
+      width: 4px;
+      background: var(--primary);
+      opacity: 0.2;
+    }
+
+    .process-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 25px;
+      position: relative;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .process-step.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-content {
+      padding-top: 10px;
+    }
+
+    .step-content h4 {
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+
+    /* Floating CTA */
+    .floating-cta {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+    }
+
+    .whatsapp-float {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+      transition: var(--transition);
+    }
+
+    .whatsapp-float:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: var(--transition);
+      margin-left: 15px;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      --light: #0F172A;
+      --text: #F9FAFB;
+      --card-bg: #1E293B;
+      --shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+      
       header {
-        flex-direction: row;
-        
-        justify-content: space-between;
+        padding: 15px 20px;
       }
-      nav {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: #0F172A;
-        margin-top: 10px;
+      
+      header nav {
+        gap: 15px;
       }
-      nav.open {
-        display: flex;
+    }
+    
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 2rem;
       }
+      
+      .section {
+        padding: 60px 20px;
+      }
+      
+      .section h3 {
+        font-size: 2rem;
+      }
+      
       .menu-toggle {
         display: flex;
       }
+      
+      header nav {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: var(--secondary);
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      }
+      
+      header nav.open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      .services, .testimonials-container, .stats-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .process-steps::before {
+        left: 30px;
+      }
+      
+      .whatsapp-float span {
+        display: none;
+      }
+      
+      .whatsapp-float {
+        padding: 15px;
+      }
+      
+      .theme-toggle {
+        margin-left: 10px;
+      }
     }
-    #temoignages h3 {
-  color: #0F172A;
-}
-#temoignages a {
-  color: #26C6DA;
-  text-decoration: underline;
-}
+    
+    @media (max-width: 480px) {
+      .hero {
+        padding: 80px 20px;
+      }
+      
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+      
+      .btn {
+        padding: 12px 25px;
+      }
+      
+      .process-step {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+      
+      .step-content {
+        padding-top: 0;
+      }
+    }
+
+        /* Corrections pour le mode sombre */
+    body.dark-mode .section h3 {
+      color: var(--text);
+    }
+    
+    body.dark-mode .card {
+      background: var(--card-bg);
+      color: var(--text);
+    }
+    
+    body.dark-mode .card h4 {
+      color: var(--primary);
+    }
+    
+    body.dark-mode .pricing-card {
+      background: var(--card-bg);
+      color: var(--text);
+    }
+    
+    body.dark-mode .pricing-card h4 {
+      color: var(--primary);
+    }
+    
+    body.dark-mode .faq-item {
+      background: var(--card-bg);
+      color: var(--text);
+    }
+    
+    body.dark-mode .faq-question {
+      background-color: #1a253a;
+      color: var(--text);
+    }
+    
+    body.dark-mode .faq-question:hover {
+      background-color: #22304a;
+    }
+    
+    body.dark-mode .testimonial-card {
+      background: var(--card-bg);
+      color: var(--text);
+    }
+    
+    body.dark-mode .testimonial-author {
+      color: var(--primary);
+    }
+    
+    body.dark-mode .process-step {
+      color: var(--text);
+    }
+    
+    body.dark-mode .step-content h4 {
+      color: var(--primary);
+    }
+    
+    /* Assurer la visibilité du texte dans les sections normales en mode sombre */
+    body.dark-mode .section:not(#stats):not(#contact) {
+      background-color: var(--light);
+    }
+    
+    /* Correction spécifique pour la section processus */
+    body.dark-mode #process {
+      background-color: var(--light);
+    }
   </style>
 </head>
 <body>
-
   <!-- HEADER -->
   <header>
-  <h1>
-    <img src="images/3592fa62-333e-4409-b4b5-0b862bbf398e.png" alt="Logo" style="height:60px; vertical-align:middle; margin-right:10px;">
-  </h1>
-  <button class="menu-toggle" aria-label="Ouvrir le menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-  <nav>
-    <a href="#services">Services</a>
-    <a href="#tarifs">Tarifs</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+    <h1><img src="images/3592fa62-333e-4409-b4b5-0b862bbf398e.png" alt="Logo Hunter Web Development"></h1>
+    
+    <button id="theme-toggle" class="theme-toggle" aria-label="Changer le mode de couleur">
+      <i class="fas fa-moon"></i>
+    </button>
+    
+    <button class="menu-toggle" aria-label="Ouvrir le menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">FAQ</a>
+      <a href="#temoignages">Témoignages</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
   <!-- HERO -->
   <section class="hero">
-    <h2>🚀 Votre site web professionnel dès 80.000 CFA – Développez votre business en ligne</h2>
-    <p>Nous créons des solutions digitales adaptées à vos besoins : vitrine, e-commerce, gestion en ligne. 
-    Avec Hunter Web Development, transformez vos idées en réalité.</p>
-    <a href="#tarifs" class="btn">Découvrez nos packs</a>
-    
+    <div class="hero-content">
+      <h2>🚀 Votre site web professionnel dès 80.000 CFA</h2>
+      <p>Nous créons des solutions digitales adaptées à vos besoins : vitrine, e-commerce, gestion en ligne. Avec Hunter Web Development, transformez vos idées en réalité.</p>
+      <a href="#tarifs" class="btn">Découvrez nos packs</a>
+    </div>
+  </section>
+
+  <!-- STATISTIQUES -->
+  <section class="section" id="stats">
+    <h3>Notre Impact en Chiffres</h3>
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-number" data-count="50">0</div>
+        <div class="stat-label">Projets réalisés</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="98">0</div>
+        <div class="stat-label">Clients satisfaits</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="3">0</div>
+        <div class="stat-label">Ans d'expérience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="24">0</div>
+        <div class="stat-label">Support 24/7</div>
+      </div>
+    </div>
   </section>
 
   <!-- SERVICES -->
@@ -216,20 +933,25 @@
     <h3>Nos Services</h3>
     <div class="services">
       <div class="card">
+        <i class="fas fa-globe"></i>
         <h4>Site Vitrine</h4>
         <p>Un site professionnel pour présenter votre activité et attirer vos clients.</p>
       </div>
       <div class="card">
+        <i class="fas fa-shopping-cart"></i>
         <h4>Boutique en Ligne</h4>
         <p>Vendez vos produits facilement grâce à une solution e-commerce sur mesure.</p>
       </div>
       <div class="card">
+        <i class="fas fa-tools"></i>
         <h4>Maintenance & Support</h4>
         <p>Accompagnement continu pour assurer la sécurité et la performance de votre site.</p>
       </div>
       <div class="card">
-        <h4>📈 SEO Optimisé</h4>
-        <p>Un site pensé pour être bien référencé sur Google.</p>
+        <i class="fas fa-chart-line"></i>
+        <h4>SEO Optimisé</h4>
+        <p>Un site pensé pour être bien référencé sur Google et attirer plus de visiteurs.</p>
+      </div>
     </div>
   </section>
 
@@ -237,145 +959,324 @@
   <section class="section" id="tarifs">
     <h3>Nos Offres</h3>
     <div class="services">
-      <div class="card">
-  <img src="images/pexels-knownasovan-57690.jpg" alt="Pack Vitrine">
-  <h4>🌐 Pack Vitrine</h4>
+      <div class="pricing-card">
+        <img src="images/pexels-knownasovan-57690.jpg" alt="Pack Vitrine">
+        <h4><i class="fas fa-paint-brush"></i> Pack Vitrine</h4>
         <p>Idéal pour les petites entreprises et indépendants qui veulent une présence en ligne.</p>
-        <ul style="text-align:left;">
-          <li>✓ 3 à 5 pages (Accueil, À propos, Services, Contact…)</li>
-          <li>✓ Design moderne et responsive</li>
-          <li>✓ Sécurisé (SSL inclus)</li>
-          <li>✓ Optimisé pour Google (SEO de base)</li>
+        <div class="price">
+          <span style="color:#26C6DA;">80 000 FCFA</span>
+          <del>100 000 FCFA</del>
+        </div>
+        <ul class="pricing-features">
+          <li>3 à 5 pages (Accueil, À propos, Services, Contact…)</li>
+          <li>Design moderne et responsive</li>
+          <li>Sécurisé (SSL inclus)</li>
+          <li>Optimisé pour Google (SEO de base)</li>
+          <li>Formation à l'utilisation</li>
         </ul>
-        <p>
-          <strong style="color:#26C6DA;">Promo : 80 000 FCFA</strong>
-          <span style="text-decoration:line-through; color:#888; margin-left:10px;">100 000 FCFA</span>
-        </p>
-        <a href="https://wa.me/2250715932363" class="btn" target="_blank" rel="noopener noreferrer">Discuter sur WhatsApp</a>
+        <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20j%27ai%20un%20projet%20web%20et%20je%20souhaite%20en%20discuter%20avec%20vous." class="btn" target="_blank" rel="noopener noreferrer">Discuter sur WhatsApp</a>
       </div>
-      <div class="card">
-  <img src="images/pexels-n-voitkevich-6214452.jpg" alt="Pack E-commerce">
-  <h4>🛒 Pack E-commerce</h4>
+      
+      <div class="pricing-card">
+        <img src="images/pexels-n-voitkevich-6214452.jpg" alt="Pack E-commerce">
+        <h4><i class="fas fa-store"></i> Pack E-commerce</h4>
         <p>Conçu pour vendre vos produits/services en ligne avec paiement intégré.</p>
-        <ul style="text-align:left;">
-          <li>✓ Boutique en ligne complète</li>
-          <li>✓ Gestion produits illimités</li>
-          <li>✓ Paiement sécurisé (Mobile Money, cartes…)</li>
-          <li>✓ Suivi des commandes</li>
+        <div class="price">
+          <span style="color:#26C6DA;">120 000 FCFA</span>
+          <del>150 000 FCFA</del>
+        </div>
+        <ul class="pricing-features">
+          <li>Boutique en ligne complète</li>
+          <li>Gestion produits illimités</li>
+          <li>Paiement sécurisé (Mobile Money, cartes…)</li>
+          <li>Suivi des commandes</li>
+          <li>Interface d'administration intuitive</li>
         </ul>
-        <p>
-          <strong style="color:#26C6DA;">Promo : 120 000 FCFA</strong>
-          <span style="text-decoration:line-through; color:#888; margin-left:10px;">150 000 FCFA</span>
-        </p>
-        <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20je%20veux%20en%20savoir%20plus%20sur%20le%20Pack%20E-commerce." class="btn" target="_blank" rel="noopener noreferrer">Discuter sur WhatsApp</a>
+                <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20je%20veux%20en%20savoir%20plus%20sur%20le%20Pack%20E-commerce." class="btn" target="_blank" rel="noopener noreferrer">Discuter sur WhatsApp</a>
       </div>
-      <div class="card">
-  <img src="images/pexels-markusspiske-177598.jpg" alt="Pack Premium">
-  <h4>🚀 Pack Premium</h4>
+      
+      <div class="pricing-card">
+        <img src="images/pexels-markusspiske-177598.jpg" alt="Pack Premium">
+        <h4><i class="fas fa-star"></i> Pack Premium</h4>
         <p>Pour les entreprises qui veulent un site sur-mesure avec des fonctionnalités avancées.</p>
-        <ul style="text-align:left;">
-          <li>✓ Tout le Pack E-commerce</li>
-          <li>✓ Blog professionnel</li>
-          <li>✓ Référencement avancé (SEO pro)</li>
-          <li>✓ Maintenance 1 mois offerte</li>
+        <div class="price">
+          <span style="color:#26C6DA;">200 000 FCFA</span>
+          <del>250 000 FCFA</del>
+        </div>
+        <ul class="pricing-features">
+          <li>Tout le Pack E-commerce</li>
+          <li>Blog professionnel intégré</li>
+          <li>Référencement avancé (SEO pro)</li>
+          <li>Maintenance 1 mois offerte</li>
+          <li>Support prioritaire</li>
         </ul>
-        <p>
-          <strong style="color:#26C6DA;">Promo : 200 000 FCFA</strong>
-          <span style="text-decoration:line-through; color:#888; margin-left:10px;">250 000 FCFA</span>
-        </p>
-        <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20je%20m%27int%C3%A9resse%20au%20Pack%20Premium%20pour%20mon%20entreprise." class="btn" target="_blank" rel="noopener noreferrer">
-    Discuter sur WhatsApp
-  </a>
+       <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20je%20m%27int%C3%A9resse%20au%20Pack%20Premium%20pour%20mon%20entreprise." class="btn" target="_blank" rel="noopener noreferrer">Discuter sur WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESSUS -->
+  <section class="section" id="process">
+    <h3>Notre Processus en 4 Étapes</h3>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h4>Consultation</h4>
+          <p>Nous discutons de vos besoins et objectifs pour comprendre votre vision.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h4>Conception</h4>
+          <p>Création d'une maquette personnalisée pour validation avant développement.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h4>Développement</h4>
+          <p>Implémentation technique avec les dernières technologies web.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h4>Livraison & Formation</h4>
+          <p>Mise en ligne et formation pour que vous maîtrisiez votre outil.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
   <section class="section" id="faq">
-    <h3>Questions Fréquemment Posées</h3>
+    <h3>Questions Fréquentes</h3>
     <div class="faq">
       <div class="faq-item">
-        <h4>
-          <span class="chevron">▼</span>
-          Combien de temps faut-il pour créer un site ?
-        </h4>
-      </div>
-      <div class="answer">
-        <p>Un site vitrine peut être livré en 1 à 2 semaines. Une boutique en ligne en 2 à 4 semaines.</p>
-      </div>
-       <div class="faq-item">
-        <h4>
-           <span class="chevron">▼</span>
-          Quels sont les moyens de paiement acceptés ?</h4>
-       </div>
-       <div class="answer">
-        <p>Nous acceptons les paiements par Mobile Money, cartes bancaires et virements.</p>
-      </div>
-      <div class="faq-item">
-        <h4>
-           <span class="chevron">▼</span>
-          Faut-il payer tout d’un coup ?</h4>
+        <div class="faq-question">
+          <span>Combien de temps faut-il pour créer un site ?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
         </div>
-      <div class="answer">
-        <p>💡 Non, vous pouvez payer en deux fois : un acompte au lancement (nom de domaine + hébergement) et le reste à la livraison du site</p>
+        <div class="faq-answer">
+          <p>Un site vitrine peut être livré en 1 à 2 semaines. Une boutique en ligne en 2 à 4 semaines, selon la complexité du projet.</p>
+        </div>
       </div>
+      
       <div class="faq-item">
-        <h4>
-           <span class="chevron">▼</span>
-          Est-ce que je pourrai gérer moi-même mon site ?</h4> 
+        <div class="faq-question">
+          <span>Quels sont les moyens de paiement acceptés ?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Nous acceptons les paiements par Mobile Money, cartes bancaires et virements bancaires pour votre convenance.</p>
+        </div>
       </div>
-      <div class="answer">
-        <p>Oui. Nous vous formons à l’utilisation afin que vous puissiez gérer vos produits, textes et images facilement.</p>
-      </div>
+      
       <div class="faq-item">
-        <h4>
-           <span class="chevron">▼</span>
-         Et si je n’ai pas encore mon logo ou mes visuels ?</h4> 
+        <div class="faq-question">
+          <span>Faut-il payer tout d'un coup ?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Non, vous pouvez payer en deux fois : un acompte de 50% au lancement (couvrant le nom de domaine + hébergement) et le solde à la livraison du site.</p>
+        </div>
       </div>
-      <div class="answer">
-        <p>💡 Pas de souci. Nous pouvons utiliser des images provisoires ou vous conseiller sur la création de votre identité visuelle.</p>
-      </div>
+      
       <div class="faq-item">
-        <h4>
-           <span class="chevron">▼</span>
-          Proposez-vous des services de maintenance après la création du site ?</h4>
+        <div class="faq-question">
+          <span>Est-ce que je pourrai gérer moi-même mon site ?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Absolument. Nous vous formons à l'utilisation de votre site afin que vous puissiez gérer vos produits, textes et images facilement, sans connaissances techniques.</p>
+        </div>
       </div>
-      <div class="answer">
-        <p>Oui, nous offrons des forfaits de maintenance pour assurer la sécurité, les mises à jour et le bon fonctionnement de votre site.</p></div>
     </div>
   </section>
 
-  <!-- SECTION TEMOIGNAGES -->
-<section class="section" id="temoignages">
-  <h3>Ils nous font confiance</h3>
-  <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin-top: 30px;">
-    <div style="background: white; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); padding: 24px; max-width: 350px;">
-      <p style="font-style: italic;">“Grâce à Hunter Web Development, ma boutique en ligne <a href="https://masterinnova-ci.com" target="_blank" rel="noopener noreferrer">masterinnova-ci.com</a> est rapide, moderne et mes ventes ont augmenté dès le premier mois !”</p>
-      <p><strong>— M. minikoni, E-commerçant</strong></p>
+  <!-- TÉMOIGNAGES -->
+  <section class="section" id="temoignages">
+    <h3>Ils nous font confiance</h3>
+    <div class="testimonials-container">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Grâce à Hunter Web Development, ma boutique en ligne <a href="https://masterinnova-ci.com" target="_blank">masterinnova-ci.com</a> est rapide, moderne et mes ventes ont augmenté dès le premier mois !"</p>
+        <p class="testimonial-author">— M. Minikoni, E-commerçant</p>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Le site <a href="https://federalbusinesstransit.com/" target="_blank">federaltransitbusiness.com</a> reflète parfaitement l'image de notre entreprise. Service pro, réactif et sur-mesure !"</p>
+        <p class="testimonial-author">— Mr. Coulibaly, PDG</p>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"J'ai été impressionné par le professionnalisme et la rapidité de livraison. Mon site vitrine a été livré en seulement 10 jours !"</p>
+        <p class="testimonial-author">— Mme. Koné, Consultante</p>
+      </div>
     </div>
-    <div style="background: white; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); padding: 24px; max-width: 350px;">
-      <p style="font-style: italic;">“Le site <a href="https://federalbusinesstransit.com/" target="_blank" rel="noopener noreferrer">federaltransitbusiness.com</a> reflète parfaitement l’image de notre entreprise. Service pro, réactif et sur-mesure !”</p>
-      <p><strong>— Mr.coulibaly, PDG</strong></p>
-    </div>
-  </div>
-</section>
+  </section>
 
   <!-- CONTACT -->
   <section class="section" id="contact">
     <h3>Contactez-nous</h3>
-    <p id="passe">Prêt à lancer votre projet ? Discutons-en dès aujourd’hui.</p>
-    <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20j%27ai%20un%20projet%20web%20et%20je%20souhaite%20en%20discuter%20avec%20vous." class="btn" target="_blank" rel="noopener noreferrer">
-  Discuter sur WhatsApp
-</a>
+    <p id="passe">Prêt à lancer votre projet ? Discutons-en dès aujourd'hui.</p>
+    <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20j%27ai%20un%20projet%20web%20et%20je%20souhaite%20en%20discuter%20avec%20vous." class="btn" target="_blank" rel="noopener noreferrer">Discuter sur WhatsApp</a>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 Hunter Web Development</p>
+    <p>© 2025 Hunter Web Development. Tous droits réservés.</p>
     <p><a href="#">Politique de confidentialité</a> | <a href="#">Mentions légales</a></p>
   </footer>
 
-  <script src="jquery-3.7.1.min.js"></script>
-  <script src="script.js"></script>
+  <!-- CTA FLOTTANT -->
+  <div class="floating-cta">
+    <a href="https://wa.me/2250715932363?text=Bonjour%20Hunter%20Web%20Development%2C%20j%27ai%20un%20projet%20web%20et%20je%20souhaite%20en%20discuter%20avec%20vous." class="whatsapp-float"  target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-whatsapp"></i>
+      <span>Discutez avec nous</span>
+    </a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menu mobile
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+      
+      if (menuToggle && nav) {
+        menuToggle.addEventListener('click', function() {
+          nav.classList.toggle('open');
+        });
+      }
+      
+      // FAQ accordéon
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      if (faqItems.length > 0) {
+        faqItems.forEach(item => {
+          const question = item.querySelector('.faq-question');
+          
+          if (question) {
+            question.addEventListener('click', () => {
+              // Fermer les autres éléments ouverts
+              faqItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                  otherItem.classList.remove('active');
+                }
+              });
+              
+              // Basculer l'élément actuel
+              item.classList.toggle('active');
+            });
+          }
+        });
+      }
+      
+      // Animation au défilement
+      const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.card, .pricing-card, .testimonial-card, .stat-card, .process-step');
+        
+        elements.forEach(element => {
+          const position = element.getBoundingClientRect();
+          
+          // Si l'élément est dans le viewport
+          if(position.top < window.innerHeight - 100) {
+            element.classList.add('visible');
+          }
+        });
+      };
+      
+      // Écouter l'événement de défilement
+      window.addEventListener('scroll', animateOnScroll);
+      // Déclencher une première fois au chargement
+      setTimeout(animateOnScroll, 100);
+      
+      // Animation douce pour les ancres
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            
+            // Fermer le menu mobile si ouvert
+            if (nav && nav.classList.contains('open')) {
+              nav.classList.remove('open');
+            }
+            
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // === NOUVEAU JAVASCRIPT ===
+
+      // Compteur animé pour les statistiques
+      function animateCounter() {
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
+        
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-count');
+          const count = +counter.innerText;
+          const increment = Math.ceil(target / speed);
+          
+          if (count < target) {
+            counter.innerText = Math.min(count + increment, target);
+            setTimeout(animateCounter, 1);
+          }
+        });
+      }
+
+      // Observer pour lancer l'animation du compteur
+      const statsSection = document.getElementById('stats');
+      if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCounter();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        observer.observe(statsSection);
+      }
+
+      // Toggle mode sombre/clair
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+          document.body.classList.toggle('dark-mode');
+          
+          if (document.body.classList.contains('dark-mode')) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+          } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+          }
+          
+          // Sauvegarder la préférence
+          localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+        
+        // Charger la préférence de thème
+        if (localStorage.getItem('theme') === 'dark') {
+          document.body.classList.add('dark-mode');
+          themeIcon.classList.remove('fa-moon');
+          themeIcon.classList.add('fa-sun');
+        }
+      }
+    });
+  </script>
 </body>
 </html>
