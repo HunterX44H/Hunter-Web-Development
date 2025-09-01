@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W3RVYGL7EL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-W3RVYGL7EL');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hunter Web Development</title>
@@ -1201,6 +1211,27 @@
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
             e.preventDefault();
+
+            // Dans votre code JavaScript, ajoutez ceci pour suivre les clicks
+document.querySelectorAll('a[href*="wa.me"]').forEach(button => {
+  button.addEventListener('click', function() {
+    gtag('event', 'whatsapp_click', {
+      'event_category': 'Contact',
+      'event_label': 'WhatsApp Contact'
+    });
+  });
+});
+
+// Suivi des clicks sur les boutons de pricing
+document.querySelectorAll('.btn').forEach(button => {
+  button.addEventListener('click', function() {
+    const buttonText = this.textContent.trim();
+    gtag('event', 'pricing_click', {
+      'event_category': 'Conversion',
+      'event_label': buttonText
+    });
+  });
+});
             
             // Fermer le menu mobile si ouvert
             if (nav && nav.classList.contains('open')) {
